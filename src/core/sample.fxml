@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="grafo" onMousePressed="#mousePressed" prefHeight="480.0" prefWidth="640.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.Controller">
+
+    <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="640.0">
+        <menus>
+            <Menu mnemonicParsing="false" text="Archivo">
+                <items>
+                    <MenuItem fx:id="iniciar" mnemonicParsing="false" text="Guardar" onAction="#guardar" />
+                    <MenuItem fx:id="cargar" mnemonicParsing="false" text="Cargar" onAction="#cargar"  />
+                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Workspace">
+                <items>
+                    <MenuItem mnemonicParsing="false" text="Limpiar" onAction="#limpiar" />
+                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Ayuda">
+                <items>
+                    <MenuItem mnemonicParsing="false" text="Acerca de" onAction="#mostrar_info" />
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+</AnchorPane>
