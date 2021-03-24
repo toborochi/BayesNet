@@ -134,41 +134,55 @@ public class VertexFX extends StackPane {
                 }
             }else  if (e.isPrimaryButtonDown()) {
 
+
+
                 if (Controller.selectedVertex != null && !Controller.selectedVertex.vertex.equals(vertex)) {
 
-                    EdgeFX edge = new EdgeFX(Controller.selectedVertex.getLayoutX(),
-                            Controller.selectedVertex.getLayoutY(),
-                            getLayoutX(),
-                            getLayoutY());
-                    edge.x1Property().bind(Controller.selectedVertex.layoutXProperty());
-                    edge.y1Property().bind(Controller.selectedVertex.layoutYProperty());
-                    edge.x2Property().bind(layoutXProperty());
-                    edge.y2Property().bind(layoutYProperty());
-                    Controller.selectedVertex.edges.add(edge);
+                    // Already exists a connection
+                    if(!Controller.bayesnet.existEdgeBetween(vertex,Controller.selectedVertex.vertex)) {
+
+                        EdgeFX edge = new EdgeFX(Controller.selectedVertex.getLayoutX(),
+                                Controller.selectedVertex.getLayoutY(),
+                                getLayoutX(),
+                                getLayoutY());
+                        edge.x1Property().bind(Controller.selectedVertex.layoutXProperty());
+                        edge.y1Property().bind(Controller.selectedVertex.layoutYProperty());
+                        edge.x2Property().bind(layoutXProperty());
+                        edge.y2Property().bind(layoutYProperty());
+                        Controller.selectedVertex.edges.add(edge);
 
 
+                        //DIALOGO
+                        TextInputDialog dialog = new TextInputDialog("");
+                        dialog.setTitle("Arista");
+                        dialog.setHeaderText("Valor de la Arista");
+                        dialog.setContentText("Ingrese el valor de la arista:");
 
-                    //DIALOGO
-                    TextInputDialog dialog = new TextInputDialog("");
-                    dialog.setTitle("Arista");
-                    dialog.setHeaderText("Valor de la Arista");
-                    dialog.setContentText("Ingrese el valor de la arista:");
+                        Optional<String> result = dialog.showAndWait();
+                        if (result.isPresent()) {
 
-                    Optional<String> result = dialog.showAndWait();
-                    if (result.isPresent()) {
-
-                        if(result.get().matches("[-+]?\\d*\\.?\\d+")){
-                            Controller.selectedVertex.vertex.addEdge(new Edge(new BigDecimal(result.get()), vertex));
-                            edge.setContent(result.get());
-                        }else{
-                            Controller.selectedVertex.vertex.addEdge(new Edge(new BigDecimal("0.0"), vertex));
-                            edge.setContent("0.0");
+                            if (result.get().matches("[-+]?\\d*\\.?\\d+")) {
+                                Controller.selectedVertex.vertex.addEdge(new Edge(new BigDecimal(result.get()), vertex));
+                                edge.setContent(result.get());
+                            } else {
+                                Controller.selectedVertex.vertex.addEdge(new Edge(new BigDecimal("0.0"), vertex));
+                                edge.setContent("0.0");
+                            }
                         }
+
+                        edges.add(edge);
+                        parent.getChildren().add(edge);
+
+
+
+                    }else{
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Advertencia");
+                        alert.setHeaderText("Revisar la Red Bayesiana");
+                        alert.setContentText("Ha ocurrido un error al construirlo.");
+
+                        alert.showAndWait();
                     }
-
-                    edges.add(edge);
-                    parent.getChildren().add(edge);
-
 
                     Controller.selectedVertex = null;
 

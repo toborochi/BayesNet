@@ -198,4 +198,33 @@ public class Bayes {
     public void clear(){
         vertices.clear();;
     }
+
+    public boolean existEdgeBetween(Vertex u,Vertex v){
+
+        for (Edge edge : u.getAdjacent()) {
+            if(edge.getTo().getTag().compareTo(v.getTag())==0)
+                return true;
+        }
+
+        for (Edge edge : v.getAdjacent()) {
+            if(edge.getTo().getTag().compareTo(u.getTag())==0)
+                return true;
+        }
+        return false;
+    }
+
+    public Edge getEdgeBetween(Vertex u,Vertex v){
+
+        for (Vertex vertex : vertices) {
+            if(vertex.getTag().compareTo(u.getTag())==0){
+                for (Edge edge : vertex.getAdjacent()) {
+                    if(edge.getTo().getTag().compareTo(v.getTag())==0){
+                        return edge;
+                    }
+                }
+            }
+        }
+        return null;
+
+    }
 }
