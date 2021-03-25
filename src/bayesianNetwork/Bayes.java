@@ -165,6 +165,10 @@ public class Bayes {
 
     public boolean checkRB(){
 
+        if(vertices.size()==0){
+            return false;
+        }
+
         for (Vertex vertex : vertices) {
             if(!isFact(vertex)){
                 if(getAdyacentes(vertex).size()==0)

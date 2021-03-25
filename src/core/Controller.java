@@ -223,7 +223,7 @@ public class Controller {
             for (Vertex goal : bayesnet.getGoals()) {
                 bayesnet.CF(goal);
             }
-        }
+
         // Refresh edges
         for (Node child : grafo.getChildren()) {
             if (child.getClass() == VertexFX.class) {
@@ -244,7 +244,13 @@ public class Controller {
         alert.setContentText(msg);
 
         alert.showAndWait();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Advertencia");
+            alert.setHeaderText("Revisar la Red Bayesiana");
+            alert.setContentText("Ha ocurrido un error al construirlo.");
 
-
+            alert.showAndWait();
+        }
     }
 }
