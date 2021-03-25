@@ -2,6 +2,7 @@ package graphFX;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polyline;
@@ -11,6 +12,7 @@ public class EdgeFX extends Group {
     private Polyline mainLine = new Polyline();
     private Polyline headA = new Polyline();
     private Polyline headB = new Polyline();
+    private Button button = new Button("Editar");
 
     public double getX1() {
         return x1.get();
@@ -122,6 +124,7 @@ public class EdgeFX extends Group {
 
         getChildren().addAll(mainLine, headA, headB);
 
+
         for (SimpleDoubleProperty s : new SimpleDoubleProperty[]{this.x1, this.y1, this.x2, this.y2}) {
             s.addListener((l, o, n) -> update());
         }
@@ -134,6 +137,12 @@ public class EdgeFX extends Group {
         //node coordinates = the arrow's mid-point minus 1/2 the width/height, so the content is bang in the centre
         content.layoutXProperty().bind(x2Property().add(x1Property()).divide(2).subtract(content.widthProperty().divide(2)));
         content.layoutYProperty().bind(y2Property().add(y1Property()).divide(2).subtract(content.heightProperty().divide(2)));
+
+        //getChildren().add(button);
+        //button.setStyle("-fx-font-size:8");
+        //button.layoutXProperty().bind(x2Property().add(x1Property()).divide(2).subtract(content.widthProperty().divide(2)));
+        //button.layoutYProperty().bind(y2Property().add(y1Property()).divide(2).subtract(content.heightProperty().divide(2)).subtract(-22));
+
 
         update();
     }

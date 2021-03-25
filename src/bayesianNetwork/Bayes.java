@@ -9,12 +9,17 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Bayes {
     private static List<Vertex> vertices = new ArrayList<>();
 
     public void addVertex(Vertex v){
         vertices.add(v);
+    }
+
+    public List<Vertex> getGoals(){
+        return vertices.stream().filter(vertex -> isGoal(vertex)).collect(Collectors.toList());
     }
 
     public void deleteVertex(Vertex v){
@@ -150,7 +155,7 @@ public class Bayes {
 
     public void reset(){
         for (Vertex vertex : vertices) {
-            if(!isFact(vertex))
+            if(!isFact(vertex) && !isGoal(vertex))
             {
                 vertex.setCF(new BigDecimal("-1.0"));
                 System.out.println(vertex.getTag()+" val: "+vertex.getCF().toString());

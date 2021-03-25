@@ -24,7 +24,7 @@ public class VertexFX extends StackPane {
 
     // Javafx Components
     Button button = new Button();
-    Label label = new Label();
+    public Label label = new Label();
     ContextMenu contextMenu;
     public ObservableList<EdgeFX> edges = FXCollections.observableArrayList();
 

@@ -216,4 +216,35 @@ public class Controller {
 
         alert.showAndWait();
     }
+
+    public void ejecutar(ActionEvent actionEvent) {
+        // Calculate
+        if(bayesnet.checkRB()){
+            for (Vertex goal : bayesnet.getGoals()) {
+                bayesnet.CF(goal);
+            }
+        }
+        // Refresh edges
+        for (Node child : grafo.getChildren()) {
+            if (child.getClass() == VertexFX.class) {
+                ((VertexFX) child).label.setText(((VertexFX) child).vertex.getCF().toString());
+            }
+        }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Metas");
+        alert.setHeaderText("Metas Calculadas!");
+
+        String msg = "";
+        for (Vertex goal : bayesnet.getGoals()) {
+            BigDecimal cf = new BigDecimal("100.0").multiply(goal.getCF());
+            msg+="Meta "+goal.getTag()+" se cumple al "+cf+"%\n";
+        }
+
+        alert.setContentText(msg);
+
+        alert.showAndWait();
+
+
+    }
 }
