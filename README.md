@@ -1,3 +1,3 @@
 # BayesNet
 
-![](https://i.imgur.com/UXtFmQR.gif)
+![](https://i.imgur.com/Bz65EsN.gif)
