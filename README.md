@@ -4,8 +4,6 @@ Editor minimalista de una Red Bayesiana.
 
 ### Instrucciones
 
-
-
 ![](https://i.imgur.com/Bz65EsN.gif)
   * Acciones sobre un nodo:
     * <kbd>Left Mouse Button</kbd>: Crear nodo
@@ -16,4 +14,7 @@ Editor minimalista de una Red Bayesiana.
     * Workspace: Limpiar el espacio de trabajo o ejecutar la red.
 
   * Uso: 
-    * Para conectar nodos es necesario seleccionar la opcion relacionar de algu nodo "Hecho", y hacer click en el nodo a relacionar.
+    * Para conectar nodos es necesario seleccionar la opcion relacionar de algún nodo "Hecho", y hacer click en el nodo a relacionar.
+
+### Archivos
+En el respositorio se encuentra un archivo ```example.rbayes``` como ejemplo.
