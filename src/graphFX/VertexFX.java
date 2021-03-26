@@ -144,7 +144,8 @@ public class VertexFX extends StackPane {
                         EdgeFX edge = new EdgeFX(Controller.selectedVertex.getLayoutX(),
                                 Controller.selectedVertex.getLayoutY(),
                                 getLayoutX(),
-                                getLayoutY());
+                                getLayoutY(),
+                                parent);
                         edge.x1Property().bind(Controller.selectedVertex.layoutXProperty());
                         edge.y1Property().bind(Controller.selectedVertex.layoutYProperty());
                         edge.x2Property().bind(layoutXProperty());

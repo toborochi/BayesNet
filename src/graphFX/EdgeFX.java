@@ -1,18 +1,27 @@
 package graphFX;
 
+import bayesianNetwork.Edge;
+import bayesianNetwork.Vertex;
+import core.Controller;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polyline;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EdgeFX extends Group {
     private final Pane content  = new Pane();
     private Polyline mainLine = new Polyline();
     private Polyline headA = new Polyline();
     private Polyline headB = new Polyline();
-    private Button button = new Button("Editar");
+    private Button button = new Button("Borrar");
 
     public double getX1() {
         return x1.get();
@@ -112,7 +121,7 @@ public class EdgeFX extends Group {
         content.getChildren().setAll(new Label(" "+v+" "));
     }
 
-    public EdgeFX(double x1, double y1, double x2, double y2) {
+    public EdgeFX(double x1, double y1, double x2, double y2, AnchorPane parent) {
         this.x1.set(x1);
         this.y1.set(y1);
         this.x2.set(x2);
@@ -138,10 +147,49 @@ public class EdgeFX extends Group {
         content.layoutXProperty().bind(x2Property().add(x1Property()).divide(2).subtract(content.widthProperty().divide(2)));
         content.layoutYProperty().bind(y2Property().add(y1Property()).divide(2).subtract(content.heightProperty().divide(2)));
 
-        //getChildren().add(button);
-        //button.setStyle("-fx-font-size:8");
-        //button.layoutXProperty().bind(x2Property().add(x1Property()).divide(2).subtract(content.widthProperty().divide(2)));
-        //button.layoutYProperty().bind(y2Property().add(y1Property()).divide(2).subtract(content.heightProperty().divide(2)).subtract(-22));
+        getChildren().add(button);
+        button.setStyle("-fx-font-size:8");
+        button.layoutXProperty().bind(x2Property().add(x1Property()).divide(2).subtract(content.widthProperty().divide(2)));
+        button.layoutYProperty().bind(y2Property().add(y1Property()).divide(2).subtract(content.heightProperty().divide(2)).subtract(-22));
+
+        button.setOnMousePressed(mouseEvent -> {
+
+            // Looking for vertexfx that contains this edge
+            List<VertexFX> found = new ArrayList<>();
+
+            for (Node child : parent.getChildren()) {
+                if(child.getClass()==VertexFX.class){
+                    VertexFX v = (VertexFX) child;
+                    if(v.edges.contains(this)){
+                        found.add(v);
+                    }
+                }
+            }
+
+            System.out.println(found.size());
+
+            // Delete edgesFX
+            found.get(0).edges.remove(this);
+            found.get(1).edges.remove(this);
+            parent.getChildren().remove(this);
+
+            // Vertex from Bayes class
+            Vertex u = found.get(0).vertex;
+            Vertex v = found.get(1).vertex;
+
+            // Delete edges between nodes (u,v)
+            Controller.bayesnet.deleteEdge(u,v);
+            Controller.bayesnet.deleteEdge(v,u);
+
+
+            //Edge a = Controller.bayesnet.getEdgeBetween(u,v);
+            //Edge b = Controller.bayesnet.getEdgeBetween(v,u);
+            //System.out.println(a);
+            //System.out.println(b);
+
+
+        });
+
 
 
         update();

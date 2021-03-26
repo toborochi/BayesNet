@@ -69,9 +69,8 @@ public class Bayes {
     }
 
 
+    // CF Implementado con la 2da chance
     public BigDecimal _CF(Vertex v){
-
-
 
         if(isFact(v)){
 
@@ -87,14 +86,35 @@ public class Bayes {
         List<Vertex> adyacentes = getAdyacentes(v);
 
         for (Vertex adyacente : adyacentes) {
-
-
             ac = ac.add(_CF(adyacente).multiply(prob(adyacente,v)));
-
         }
-        v.setCF(ac);
-        return ac;
 
+        //System.out.println(ac.compareTo(new BigDecimal("0.0")));
+        //System.out.println(allFacts(adyacentes));
+
+        // MODIFICACION AL PROYECTO :D
+        // Its childs are facts with CF=0
+        if(ac.compareTo(new BigDecimal("0.0"))==0 &&
+           allFacts(adyacentes)){
+            // Ask again
+            v.setCF(consulta(v));
+        }else{
+            v.setCF(ac);
+        }
+
+
+        return v.getCF();
+
+    }
+
+    // Check if all vertices are facts
+    boolean allFacts(List<Vertex> v){
+        for (Vertex vertex : v) {
+            if(!isFact(vertex)){
+                return false;
+            }
+        }
+        return true;
     }
 
     BigDecimal consulta(Vertex v){
@@ -234,6 +254,13 @@ public class Bayes {
             }
         }
         return null;
+    }
+
+    public void deleteEdge(Vertex u,Vertex v){
+        if(u==null)return;
+        if(v==null)return;
+
+        u.getAdjacent().removeIf(edge -> edge.getTo().equals(v));
 
     }
 }

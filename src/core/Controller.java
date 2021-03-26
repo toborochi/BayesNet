@@ -54,7 +54,7 @@ public class Controller {
             counter++;
 
             if (selectedVertex != null) {
-                EdgeFX edge = new EdgeFX(selectedVertex.getLayoutX(),selectedVertex.getLayoutY(),vfx.getLayoutX(),vfx.getLayoutY());
+                EdgeFX edge = new EdgeFX(selectedVertex.getLayoutX(),selectedVertex.getLayoutY(),vfx.getLayoutX(),vfx.getLayoutY(),grafo);
                 edge.x1Property().bind(selectedVertex.layoutXProperty());
                 edge.y1Property().bind(selectedVertex.layoutYProperty());
                 edge.x2Property().bind(vfx.layoutXProperty());
@@ -163,7 +163,7 @@ public class Controller {
                     //System.out.println(vertices.get(edge.getTo().getTag()));
 
                     // Instantiate Edges
-                    EdgeFX edgefx = new EdgeFX(from.getLayoutX(),from.getLayoutY(),to.getLayoutX(),to.getLayoutY());
+                    EdgeFX edgefx = new EdgeFX(from.getLayoutX(),from.getLayoutY(),to.getLayoutX(),to.getLayoutY(),grafo);
                     edgefx.x1Property().bind(from.layoutXProperty());
                     edgefx.y1Property().bind(from.layoutYProperty());
                     edgefx.x2Property().bind(to.layoutXProperty());
@@ -253,4 +253,6 @@ public class Controller {
             alert.showAndWait();
         }
     }
+
+
 }
