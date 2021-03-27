@@ -89,18 +89,6 @@ public class Bayes {
             ac = ac.add(_CF(adyacente).multiply(prob(adyacente,v)));
         }
 
-        //System.out.println(ac.compareTo(new BigDecimal("0.0")));
-        //System.out.println(allFacts(adyacentes));
-
-        // MODIFICACION AL PROYECTO :D
-        // Its childs are facts with CF=0
-        if(ac.compareTo(new BigDecimal("0.0"))==0 &&
-           allFacts(adyacentes)){
-            // Ask again
-            v.setCF(consulta(v));
-        }else{
-            v.setCF(ac);
-        }
 
 
         return v.getCF();
